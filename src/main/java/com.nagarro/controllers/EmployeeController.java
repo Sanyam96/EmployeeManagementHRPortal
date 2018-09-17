@@ -25,17 +25,17 @@ import java.util.List;
  * @author Sanyam Goel created on 17/9/18
  */
 @Controller
-@RequestMapping(value="employee")
+@RequestMapping(value = "employee")
 public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
 
-    @RequestMapping(method= RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public String getEmployeeList(Model model, HttpServletRequest request) {
         String response;
         HttpSession httpSession = request.getSession(false);
-        if(httpSession != null && httpSession.getAttribute("userId") != null) {
+        if (httpSession != null && httpSession.getAttribute("userId") != null) {
             List<Employee> employees = employeeService.getAllEmployees();
             model.addAttribute("employees", employees);
             response = "employeeListPage";
@@ -45,30 +45,30 @@ public class EmployeeController {
         return response;
     }
 
-    @RequestMapping(method=RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public String uploadFile(@RequestParam("file") MultipartFile file, Model model) {
         employeeService.addAllEmployees(file);
         return "redirect:/employee";
 
     }
 
-    @RequestMapping(value="/edit", method=RequestMethod.POST)
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String editEmployee(@ModelAttribute("employee") Employee employee, Model model) {
         model.addAttribute("employee", employee);
         return "editEmployeePage";
     }
 
-    @RequestMapping(value="/update", method=RequestMethod.POST)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String updateEmployee(@ModelAttribute("employee") Employee employee, Model model) {
         employeeService.updateEmployee(employee);
         return "redirect:/employee";
     }
 
-    @RequestMapping(value="/download", method=RequestMethod.POST)
+    @RequestMapping(value = "/download", method = RequestMethod.POST)
     public void downloadFile(HttpServletResponse response) {
         response.setContentType("text/csv");
         response.addHeader("Content-Disposition", "attachment; filename=" + Constants.CSV_FILE_NAME);
-        try(ICsvBeanWriter csvBeanWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE)) {
+        try (ICsvBeanWriter csvBeanWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE)) {
             employeeService.addEmployeeDetailsToFile(csvBeanWriter);
         } catch (IOException e) {
             e.printStackTrace();

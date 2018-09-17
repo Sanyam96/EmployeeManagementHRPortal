@@ -31,6 +31,4 @@ public class HibernateUserRepositoryImpl implements UserRepository {
         return user;
     }
 
-
-
 }

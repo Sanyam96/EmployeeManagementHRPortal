@@ -17,15 +17,15 @@ public class CsvUtil {
 
     public static List<Employee> getParsedData(MultipartFile file) {
 
-        try(BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
 
             String row = null;
             String[] data = null;
             List<Employee> employees = new ArrayList<Employee>();
             Employee employee;
             boolean firstRow = true;
-            while((row = reader.readLine()) != null) {
-                if(firstRow) {
+            while ((row = reader.readLine()) != null) {
+                if (firstRow) {
                     firstRow = false;
                 } else {
                     data = row.split(Constants.CSV_SEPERATOR);
@@ -35,11 +35,6 @@ public class CsvUtil {
                     employee.setLocation(data[2]);
                     employee.setEmail(data[3]);
                     employee.setDateOfBirth(data[4]);
-//                    employee.setCode(data[0]);
-//                    employee.setName(data[1]);
-//                    employee.setLocation(data[2]);
-//                    employee.setEmail(data[3]);
-//                    employee.setDob(data[4]);
                     employees.add(employee);
                 }
             }

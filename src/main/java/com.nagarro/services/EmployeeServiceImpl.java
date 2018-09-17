@@ -30,7 +30,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void addAllEmployees(MultipartFile file) {
         List<Employee> employees = CsvUtil.getParsedData(file);
-        if(employees != null) {
+        if (employees != null) {
             employeeRepository.addAllEmployees(employees);
         }
     }
@@ -44,7 +44,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void addEmployeeDetailsToFile(ICsvBeanWriter csvBeanWriter) throws IOException {
         List<Employee> employees = this.getAllEmployees();
         csvBeanWriter.writeHeader(Constants.DISPLAY_HEADER);
-        for(Employee employee : employees) {
+        for (Employee employee : employees) {
             csvBeanWriter.write(employee, Constants.BEAN_HEADER);
         }
     }

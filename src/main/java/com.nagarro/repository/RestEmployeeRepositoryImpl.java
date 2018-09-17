@@ -4,10 +4,9 @@ import com.nagarro.constant.Constants;
 import com.nagarro.models.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -24,12 +23,13 @@ public class RestEmployeeRepositoryImpl implements EmployeeRepository {
     @Override
     public List<Employee> getAllEmployees() {
         List<Employee> employees;
-        String url = Constants.REST_API_SLUG+Constants.GET_ALL_EMPLOYEES;
+        String url = Constants.REST_API_SLUG + Constants.GET_ALL_EMPLOYEES;
         ResponseEntity<List<Employee>> response = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<List<Employee>>() {});
+                new ParameterizedTypeReference<List<Employee>>() {
+                });
         employees = response.getBody();
         return employees;
     }
@@ -37,13 +37,12 @@ public class RestEmployeeRepositoryImpl implements EmployeeRepository {
     @Override
     public void addEmployee(Employee employee) {
         String url = Constants.REST_API_SLUG + Constants.POST_EMPLOYEE;
-//        String url = Constants.REST_API_URL_EMPLOYEE;
         restTemplate.postForObject(url, employee, Employee.class);
     }
 
     @Override
     public void addAllEmployees(List<Employee> employees) {
-        for(Employee employee : employees) {
+        for (Employee employee : employees) {
             this.addEmployee(employee);
         }
     }

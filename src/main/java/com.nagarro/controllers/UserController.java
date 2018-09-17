@@ -21,26 +21,26 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value="login",method= RequestMethod.GET)
+    @RequestMapping(value = "login", method = RequestMethod.GET)
     public String authenticate(Model model, HttpServletRequest request) {
         String response;
         HttpSession httpSession = request.getSession(false);
-        if(httpSession!= null && httpSession.getAttribute("userId")!=null) {
+        if (httpSession != null && httpSession.getAttribute("userId") != null) {
             response = "redirect:/employee";
         } else {
             response = "loginPage";
-            model.addAttribute("message","");
+            model.addAttribute("message", "");
         }
         return response;
     }
 
-    @RequestMapping(value="login",method=RequestMethod.POST)
+    @RequestMapping(value = "login", method = RequestMethod.POST)
     public String authenticate(@RequestParam("username") String username, @RequestParam("password") String password, Model model, HttpServletRequest request) {
         User user = userService.authenticateUser(username, password);
         String response;
-        if(user == null) {
+        if (user == null) {
             response = "loginPage";
-            model.addAttribute("message","Username or Password Incorrect");
+            model.addAttribute("message", "Username or Password Incorrect");
         } else {
             request.getSession().setAttribute("userId", user.getId());
             request.getSession().setAttribute("username", user.getUsername());
@@ -49,7 +49,7 @@ public class UserController {
         return response;
     }
 
-    @RequestMapping(value="logout",method=RequestMethod.POST)
+    @RequestMapping(value = "logout", method = RequestMethod.POST)
     public String logout(HttpServletRequest request) {
         request.getSession(false).removeAttribute("username");
         request.getSession(false).removeAttribute("userId");

@@ -1,7 +1,6 @@
 package com.nagarro.repository;
 
 import com.nagarro.models.Employee;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
