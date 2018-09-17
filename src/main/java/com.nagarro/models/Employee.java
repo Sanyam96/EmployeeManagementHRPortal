@@ -1,6 +1,7 @@
 package com.nagarro.models;
 
 /**
+ * Employee DTO to manage Employee
  * @author Sanyam Goel created on 17/9/18
  */
 

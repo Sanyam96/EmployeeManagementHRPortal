@@ -12,6 +12,8 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 /**
+ * Rest API consumption layer
+ *
  * @author Sanyam Goel created on 17/9/18
  */
 @Repository
@@ -20,6 +22,11 @@ public class RestEmployeeRepositoryImpl implements EmployeeRepository {
     @Autowired
     RestTemplate restTemplate;
 
+    /**
+     * get all employees via rest template
+     *
+     * @return
+     */
     @Override
     public List<Employee> getAllEmployees() {
         List<Employee> employees;
@@ -34,12 +41,22 @@ public class RestEmployeeRepositoryImpl implements EmployeeRepository {
         return employees;
     }
 
+    /**
+     * to add employee
+     *
+     * @param employee
+     */
     @Override
     public void addEmployee(Employee employee) {
         String url = Constants.REST_API_SLUG + Constants.POST_EMPLOYEE;
         restTemplate.postForObject(url, employee, Employee.class);
     }
 
+    /**
+     * to add all employees
+     *
+     * @param employees
+     */
     @Override
     public void addAllEmployees(List<Employee> employees) {
         for (Employee employee : employees) {
@@ -47,6 +64,10 @@ public class RestEmployeeRepositoryImpl implements EmployeeRepository {
         }
     }
 
+    /**
+     * Rest template to call update end point to update employee
+     * @param employee
+     */
     @Override
     public void updateEmployee(Employee employee) {
         String url = Constants.REST_API_SLUG + Constants.PUT_EMPLOYEE;

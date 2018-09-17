@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
+ * USER Controller to manage USER Login
  * @author Sanyam Goel created on 17/9/18
  */
 @Controller
@@ -21,6 +22,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * for authentication of user
+     * @param model
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String authenticate(Model model, HttpServletRequest request) {
         String response;
@@ -34,6 +41,14 @@ public class UserController {
         return response;
     }
 
+    /**
+     * POST to employee JSP on successful login and login if not successful
+     * @param username
+     * @param password
+     * @param model
+     * @param request
+     * @return Employee JSP | Login JSP
+     */
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public String authenticate(@RequestParam("username") String username, @RequestParam("password") String password, Model model, HttpServletRequest request) {
         User user = userService.authenticateUser(username, password);
@@ -49,6 +64,11 @@ public class UserController {
         return response;
     }
 
+    /**
+     * POST for Logout
+     * @param request
+     * @return Login JSP
+     */
     @RequestMapping(value = "logout", method = RequestMethod.POST)
     public String logout(HttpServletRequest request) {
         request.getSession(false).removeAttribute("username");

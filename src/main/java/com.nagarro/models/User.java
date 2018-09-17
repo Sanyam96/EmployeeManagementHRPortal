@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
+ * USER Model to manage User in db table
  * @author Sanyam Goel created on 17/9/18
  */
 @Entity

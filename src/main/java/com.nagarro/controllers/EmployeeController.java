@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
+ * All Employee Management Controllers
+ *
  * @author Sanyam Goel created on 17/9/18
  */
 @Controller
@@ -31,6 +33,13 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    /**
+     * GET method to get Employee List
+     *
+     * @param model
+     * @param request
+     * @return JSP PAGE response
+     */
     @RequestMapping(method = RequestMethod.GET)
     public String getEmployeeList(Model model, HttpServletRequest request) {
         String response;
@@ -45,6 +54,13 @@ public class EmployeeController {
         return response;
     }
 
+    /**
+     * POST method to upload FILES and redirect to employeeJSP
+     *
+     * @param file
+     * @param model
+     * @return redirect to
+     */
     @RequestMapping(method = RequestMethod.POST)
     public String uploadFile(@RequestParam("file") MultipartFile file, Model model) {
         employeeService.addAllEmployees(file);
@@ -52,18 +68,37 @@ public class EmployeeController {
 
     }
 
+    /**
+     * POST method to edit employee
+     *
+     * @param employee
+     * @param model
+     * @return edit employee JSP page
+     */
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String editEmployee(@ModelAttribute("employee") Employee employee, Model model) {
         model.addAttribute("employee", employee);
         return "editEmployeePage";
     }
 
+    /**
+     * POST method to redirect to employee page after editing of employee
+     *
+     * @param employee
+     * @param model
+     * @return employee JSP page
+     */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String updateEmployee(@ModelAttribute("employee") Employee employee, Model model) {
         employeeService.updateEmployee(employee);
         return "redirect:/employee";
     }
 
+    /**
+     * POST method to download all employee data using CSV
+     *
+     * @param response
+     */
     @RequestMapping(value = "/download", method = RequestMethod.POST)
     public void downloadFile(HttpServletResponse response) {
         response.setContentType("text/csv");
